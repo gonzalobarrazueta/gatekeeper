@@ -8,7 +8,7 @@ def create_mock_data():
     }
 
     df = pd.DataFrame(data)
-    df.to_csv("processed_users.csv", index=False)
+    df.to_csv("users.csv", index=False)
     print("Mock data generated: processed_users.csv")
 
 if __name__ == "__main__":
