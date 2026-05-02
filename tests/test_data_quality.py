@@ -5,8 +5,8 @@ import pytest
 def user_data():
     return pd.read_csv("users.csv")
 
-def test_no_null_emails(users_df):
+def test_no_null_emails(user_data):
     """Gate 1: Ensures every user has an email."""
-    null_emails = users_df["email"].isna()
-    assert null_emails.sum() == 0, f"User ids with no emails: {users_df.loc["user_id", null_emails].to_list()}"
+    null_emails = user_data["email"].isna()
+    assert null_emails.sum() == 0, f"User ids with no emails: {user_data.loc["user_id", null_emails].to_list()}"
 
