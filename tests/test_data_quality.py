@@ -8,5 +8,5 @@ def user_data():
 def test_no_null_emails(user_data):
     """Gate 1: Ensures every user has an email."""
     null_emails = user_data["email"].isna()
-    assert null_emails.sum() == 0, f"User ids with no emails: {user_data.loc["user_id", null_emails].to_list()}"
+    assert null_emails.sum() == 0, f"User ids with no emails: {user_data.loc[null_emails == True, "user_id"].to_list()}"
 
