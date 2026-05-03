@@ -32,3 +32,13 @@ jobs:
 
       - name: Run tests
         run: uv run pytest tests/test_data_quality.py
+
+      - name: Generate report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dq-failure-report
+          path: |
+            processed_users.csv
+            .pytest-cache/
+          retention-days: 3
