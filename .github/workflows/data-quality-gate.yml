@@ -1,5 +1,13 @@
 name: Data Quality Pipeline
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - '.github/workflows/**'
+      - 'tests/**'
+  pull_request:
+    paths:
+      - '.github/workflows/**'
+      - 'tests/**'
 
 jobs:
   dq-validation:
