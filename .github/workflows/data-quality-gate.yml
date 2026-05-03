@@ -33,11 +33,11 @@ jobs:
       - name: Run tests
         run: uv run pytest tests/test_data_quality.py
 
-      - name: Generate report on failure
+      - name: Generate artifacts on failure
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: dq-failure-report
+          name: dq-failure-artifacts
           path: |
             users.csv
             .pytest-cache/
