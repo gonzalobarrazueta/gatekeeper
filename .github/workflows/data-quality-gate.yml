@@ -39,6 +39,6 @@ jobs:
         with:
           name: dq-failure-report
           path: |
-            processed_users.csv
+            users.csv
             .pytest-cache/
           retention-days: 3
