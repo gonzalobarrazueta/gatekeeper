@@ -15,3 +15,11 @@ def test_age_is_positive(user_data):
     positive_ages = user_data["age"] > 0
     assert positive_ages.sum() == len(positive_ages), f"Users with negative ages: {user_data.loc[positive_ages == False, "user_id"].to_list()}"
 
+@pytest.mark.parametrize("col", [
+    ("user_id"),
+    ("email"),
+    ("age"),
+    ("birth_date")
+])
+def test_table_schema(col, user_data):
+    assert col in user_data.columns, f"{col} is not present in the table"
