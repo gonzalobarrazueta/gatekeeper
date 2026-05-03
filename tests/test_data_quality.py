@@ -1,9 +1,20 @@
+import great_expectations as gx
 import pandas as pd
 import pytest
 
 @pytest.fixture
 def user_data():
     return pd.read_csv("users.csv", dtype={"user_id": "Int64", "email": "string", "age": "Int64"}, parse_dates=["birth_date"])
+
+@pytest.fixture
+def batch():
+    context = gx.get_context()
+    data_source = context.data_sources.add_pandas(name="data_source")
+    data_asset = data_source.add_dataframe_asset(name="users_asset")
+    batch_definition = data_asset.add_batch_definition_whole_dataframe("batch")
+    batch_parameters = {"dataframe": pd.read_csv("users.csv", dtype={"user_id": "Int64", "email": "string", "age": "Int64"}, parse_dates=["birth_date"])}
+
+    return batch_definition.get_batch(batch_parameters=batch_parameters)
 
 @pytest.mark.parametrize("col", [
     ("user_id"),
