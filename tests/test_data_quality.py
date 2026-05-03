@@ -23,3 +23,12 @@ def test_age_is_positive(user_data):
 ])
 def test_table_schema(col, user_data):
     assert col in user_data.columns, f"{col} is not present in the table"
+
+@pytest.mark.parametrize("col, check_dtype_func", [
+    ("user_id", pd.api.types.is_integer_dtype),
+    ("email", pd.api.types.is_string_dtype),
+    ("age", pd.api.types.is_integer_dtype),
+    ("birth_date", pd.api.types.is_datetime64_any_dtype)
+])
+def test_column_types(col, check_dtype_func, user_data):
+    assert check_dtype_func(user_data[col]) == True, f"{col} ({user_data[col].dtype}) doesn't comply with defined column type."
