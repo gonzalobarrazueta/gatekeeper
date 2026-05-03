@@ -3,7 +3,7 @@ import pytest
 
 @pytest.fixture
 def user_data():
-    return pd.read_csv("users.csv")
+    return pd.read_csv("users.csv", dtype={"user_id": "Int64", "email": "string", "age": "Int64"}, parse_dates=["birth_date"])
 
 def test_no_null_emails(user_data):
     """Gate 1: Ensures every user has an email."""
