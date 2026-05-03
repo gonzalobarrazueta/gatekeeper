@@ -18,9 +18,14 @@ jobs:
         run: |
           curl -LsSf https://astral.sh/uv/install.sh | sh
 
+      - name: Cache uv dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/uv
+          key: ${{ runner.os }}-uv-${{ hashFiles('**/pyproject.toml') }}
+
       - name: Install Dependencies
-        run: |
-          uv add sqlfluff pytest great_expectations
+        run: uv sync
 
       - name: Generate mock data
         run: uv run tests/generate_data.py
