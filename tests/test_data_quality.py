@@ -5,16 +5,6 @@ import pytest
 def user_data():
     return pd.read_csv("users.csv", dtype={"user_id": "Int64", "email": "string", "age": "Int64"}, parse_dates=["birth_date"])
 
-def test_no_null_emails(user_data):
-    """Gate 1: Ensures every user has an email."""
-    null_emails = user_data["email"].isna()
-    assert null_emails.sum() == 0, f"User ids with no emails: {user_data.loc[null_emails == True, "user_id"].to_list()}"
-
-def test_age_is_positive(user_data):
-    """Gate 2: Ensures all user ages are positive."""
-    positive_ages = user_data["age"] > 0
-    assert positive_ages.sum() == len(positive_ages), f"Users with negative ages: {user_data.loc[positive_ages == False, "user_id"].to_list()}"
-
 @pytest.mark.parametrize("col", [
     ("user_id"),
     ("email"),
@@ -32,3 +22,13 @@ def test_table_schema(col, user_data):
 ])
 def test_column_types(col, check_dtype_func, user_data):
     assert check_dtype_func(user_data[col]) == True, f"{col} ({user_data[col].dtype}) doesn't comply with defined column type."
+
+def test_no_null_emails(user_data):
+    """Gate 1: Ensures every user has an email."""
+    null_emails = user_data["email"].isna()
+    assert null_emails.sum() == 0, f"User ids with no emails: {user_data.loc[null_emails == True, "user_id"].to_list()}"
+
+def test_age_is_positive(user_data):
+    """Gate 2: Ensures all user ages are positive."""
+    positive_ages = user_data["age"] > 0
+    assert positive_ages.sum() == len(positive_ages), f"Users with negative ages: {user_data.loc[positive_ages == False, "user_id"].to_list()}"
