@@ -34,6 +34,12 @@ def test_table_schema(col, user_data):
 def test_column_types(col, check_dtype_func, user_data):
     assert check_dtype_func(user_data[col]) == True, f"{col} ({user_data[col].dtype}) doesn't comply with defined column type."
 
+def test_unique_ids(batch):
+    expectation = gx.expectations.ExpectColumnValuesToBeUnique(column="user_id")
+    results = batch.validate(expectation)
+    print(results)
+    assert results.success == True, f"{results.result}"
+
 def test_no_null_emails(user_data):
     """Gate 1: Ensures every user has an email."""
     null_emails = user_data["email"].isna()
