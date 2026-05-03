@@ -39,7 +39,7 @@ jobs:
         run: uv run tests/generate_data.py
 
       - name: Run tests
-        run: uv run pytest tests/test_data_quality.py
+        run: uv run pytest -v tests/test_data_quality.py
 
       - name: Generate artifacts on failure
         if: failure()
